@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Register User</title>
+</h:head>
+
+<h:body>
+	<h:form>
+		<p:panel id="panel" header="Create new user"
+			style="margin-bottom:10px;">
+			<p:messages id="messages" />
+			<h:panelGrid columns="2" cellpadding="5">
+				<p:outputLabel value="Email:" />
+				<p:inputText id="registerEmail" required="true" value="#{userCDI.user.email}"/>
+
+				<p:outputLabel value="Password:" />
+				<p:password id="registerPwd" required="true" value="#{userCDI.user.pwd}"/>
+
+				<p:outputLabel value="Re-Type Password" />
+				<p:password id="registerPwd2" required="true" />
+
+				<p:outputLabel value="Name:" />
+				<p:inputText id="registerName" required="true" value="#{userCDI.user.name}"/>
+
+				<p:outputLabel value="Phone:" />
+				<p:panelGrid columns="3" style="">
+					<p:inputText id="registerRegionCode" required="true" value="#{userCDI.phone.regionCode}"/>
+					<p:inputText id="registerNumber" required="true" value="#{userCDI.phone.number}"/>
+					<h:selectOneMenu id="registerNumberType" required="true" value="#{userCDI.phone.numberType}">
+						<f:selectItem itemLabel="Select a type" itemValue="" />
+						<f:selectItem itemLabel="Cell Phone" itemValue="1" />
+						<f:selectItem itemLabel="Landline" itemValue="2" />
+					</h:selectOneMenu>
+				</p:panelGrid>
+
+
+			</h:panelGrid>
+		</p:panel>
+
+		<p:commandButton value="Create" action="#{userCDI.registerUser}" update="panel"/>
+	</h:form>
+	<!-- 	<h:form id="form"> -->
+	<!-- 		<h:panelGrid columns="1"> -->
+	<!-- 			<p:outputLabel value="Email" /> -->
+	<!-- 			<h:inputText value="#{user.email}" /> -->
+	<!-- 			<h:outputText value="Password" /> -->
+	<!-- 			<h:inputSecret value="#{userCDI.user.pwd}" /> -->
+	<!-- 			<h:outputText value="Name" /> -->
+	<!-- 			<h:inputText value="#{userCDI.user.name}" /> -->
+	<!-- 			<h:outputText value="Phone" /> -->
+	<!-- 			<h:inputText value="#{userCDI.phone.regionCode}" /> -->
+	<!-- 			<h:inputText value="#{userCDI.phone.number}" /> -->
+	<!-- 			<h:inputText value="#{userCDI.phone.numberType}" /> -->
+	<!-- 		</h:panelGrid> -->
+	<!-- 	</h:form> -->
+	<!-- 	<p:dataTable value="#{userCDI.userList}" var="u" id="userlist"> -->
+	<!-- 		<p:column>#{u.email}</p:column> -->
+	<!-- 		<p:column>#{u.name}</p:column> -->
+	<!-- 	</p:dataTable> -->
+	<!-- 	<p:spinner /> -->
+</h:body>
+</html>

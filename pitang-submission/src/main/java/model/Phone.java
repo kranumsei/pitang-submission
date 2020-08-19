@@ -1,9 +1,13 @@
 package model;
 
+import java.io.Serializable;
+
 import javax.persistence.Embeddable;
 
 @Embeddable
-public class Phone {
+public class Phone implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	
 	private Integer regionCode;
 	private String number;
@@ -15,6 +19,10 @@ public class Phone {
 		this.numberType = numberType;
 	}
 
+	public Phone() {
+		
+	}
+	
 	public Integer getRegionCode() {
 		return regionCode;
 	}

@@ -1,4 +1,5 @@
-<persistence>
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
    <persistence-unit name="pitang-submission" transaction-type="JTA">
       <jta-data-source>java:jboss/datasources/h2DS</jta-data-source>
       <properties>
