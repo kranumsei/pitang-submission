@@ -17,16 +17,16 @@
 			<p:messages id="messages" />
 			<h:panelGrid columns="2" cellpadding="5">
 				<p:outputLabel for="name" value="Email:" />
-				<p:inputText id="name" required="true" />
+				<p:inputText id="name" required="true" value="#{loginCDI.user.email}"/>
 
-				<p:outputLabel for="@next" value="Password:" />
-				<p:password id="extended" required="true" />
+				<p:outputLabel for="password" value="Password:" />
+				<p:password id="password" required="true" value="#{loginCDI.user.pwd}"/>
 				<p:outputLabel />
-				<p:link outcome="register.xhtml" value="Create new user." />
+				<p:link outcome="register.xhtml" value="Create new user." style="font-size:8"/>
 			</h:panelGrid>
 		</p:panel>
 
-		<p:commandButton value="Submit" update="panel" action="userCDI.verifyLogin"/>
+		<p:commandButton value="Submit" update="panel" action="#{loginCDI.validateUserLogin}"/>
 	
 	</h:form>
 	<!-- 	<h:form id="form"> -->

@@ -21,60 +21,70 @@ import javax.transaction.UserTransaction;
 import model.Phone;
 import model.User;
 
-
 @Named("userCDI")
 @SessionScoped
-public class UserCDI implements Serializable{
+public class UserCDI implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
-	
+
 	@Inject
 	private User user;
-	
+
 	@Inject
 	private Phone phone;
-	
+
 	@PersistenceContext
 	private EntityManager em;
-	
+
 	@Resource
 	private UserTransaction ut;
-	
+
 	private List<User> userList = new ArrayList<User>();
-	
-	
-	public void verifyLogin() {
-		
-	}
-	
+
 	public String registerUser() {
 		user.getPhones().add(phone);
 		persistUser();
 		userList.add(user);
 		clear();
-		return "index";
+		return "success";
 	}
-	
+
 	private void persistUser() {
 		try {
-			System.out.println(user.getEmail());
 			ut.begin();
 			em.persist(user);
-			System.out.println(em.find(User.class, user.getEmail()));
 			ut.commit();
-		} catch (NotSupportedException | SystemException | SecurityException | IllegalStateException | RollbackException | HeuristicMixedException | HeuristicRollbackException e) {
+		} catch (NotSupportedException | SystemException | SecurityException | IllegalStateException | RollbackException
+				| HeuristicMixedException | HeuristicRollbackException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void removeUser() {
+		try {
+			ut.begin();
+			User userToRemove = em.find(User.class, user.getEmail());
+			em.remove(userToRemove);
+			ut.commit();
+			userList.remove(user);
+			clear();
+		} catch (NotSupportedException | SystemException | SecurityException | IllegalStateException | RollbackException
+				| HeuristicMixedException | HeuristicRollbackException e) {
 			e.printStackTrace();
 		}
 		
 	}
-	
+
 	private void retrieveList() {
 		Query query = em.createQuery("SELECT u FROM User u");
 		userList = query.getResultList();
 	}
-	
+
+	public void editUser() {
+
+	}
+
 	private void clear() {
 		user = new User();
 		phone = new Phone();
@@ -89,7 +99,7 @@ public class UserCDI implements Serializable{
 	}
 
 	public List<User> getUserList() {
-		if(userList.size() == 0) {
+		if (userList.size() == 0) {
 			retrieveList();
 		}
 		return userList;
@@ -106,6 +116,5 @@ public class UserCDI implements Serializable{
 	public void setPhone(Phone phone) {
 		this.phone = phone;
 	}
-	
-	
+
 }

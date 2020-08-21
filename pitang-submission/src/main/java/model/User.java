@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 
 @Entity
@@ -18,16 +19,9 @@ public class User implements Serializable{
 	private String email;
 	private String pwd;
 	@Embedded
-	@ElementCollection
+	@ElementCollection(fetch = FetchType.EAGER)
 	private List<Phone> phones = new ArrayList<Phone>();
 	
-//	public User(String name, String email, String pwd, Phone phone) {
-//		this.name = name;
-//		this.email = email;
-//		this.pwd = pwd;
-//		this.phones = new ArrayList<Phone>();
-//		this.phones.add(phone);
-//	}
 
 	public User() {
 		

@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Embeddable;
 
+
 @Embeddable
 public class Phone implements Serializable {
 
@@ -13,15 +14,7 @@ public class Phone implements Serializable {
 	private String number;
 	private String numberType;
 	
-	public Phone(Integer regionCode, String number, String numberType) {
-		this.regionCode = regionCode;
-		this.number = number;
-		this.numberType = numberType;
-	}
-
-	public Phone() {
-		
-	}
+	public Phone() {}
 	
 	public Integer getRegionCode() {
 		return regionCode;
