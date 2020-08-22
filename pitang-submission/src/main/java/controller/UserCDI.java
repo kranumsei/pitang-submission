@@ -30,8 +30,8 @@ public class UserCDI implements Serializable {
 	@Inject
 	private User user;
 
-	@Inject
-	private Phone phone;
+	
+	private Phone phone = new Phone();
 
 	@PersistenceContext
 	private EntityManager em;
@@ -71,6 +71,7 @@ public class UserCDI implements Serializable {
 		}
 	}
 
+	
 	private void editUser() {
 		try {
 			ut.begin();
@@ -86,15 +87,15 @@ public class UserCDI implements Serializable {
 	}
 
 	public void submitEdition() {
-
-		User oldValues = em.find(User.class, user.getEmail());
-		if (phone.getRegionCode() != null && !phone.getNumber().equals("") && !phone.getNumberType().equals("")) {
+		if(phone.getRegionCode() != null && !phone.getNumber().equals("") && !phone.getNumberType().equals("")) {
 			user.getPhones().add(phone);
-		}
-		if (user.getName().equals("")) {
-			user.setName(oldValues.getName());
+		} 
+		if(user.getName().equals("")) {
+			User newUser = em.find(User.class, user.getEmail());
+			user.setName(newUser.getName());
 		}
 		editUser();
+		phone = new Phone();
 	}
 
 	public void removePhoneFromUser() {
@@ -138,6 +139,12 @@ public class UserCDI implements Serializable {
 	public List<User> getUserList() {
 		if (userList.size() == 0) {
 			retrieveList();
+		}
+		for(User user:userList) {
+			if(user.isAdmin()) {
+				userList.remove(user);
+				break;
+			}
 		}
 		return userList;
 	}

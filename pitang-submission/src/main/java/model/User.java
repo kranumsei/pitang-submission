@@ -21,7 +21,7 @@ public class User implements Serializable{
 	@Embedded
 	@ElementCollection(fetch = FetchType.EAGER)
 	private List<Phone> phones = new ArrayList<Phone>();
-	
+	private boolean isAdmin;
 
 	public User() {
 		
@@ -58,6 +58,16 @@ public class User implements Serializable{
 
 	public void setPhones(List<Phone> list) {
 		this.phones = list;
+	}
+
+
+	public boolean isAdmin() {
+		return isAdmin;
+	}
+
+
+	public void setAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
 	}
 	
 	

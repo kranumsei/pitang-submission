@@ -8,17 +8,19 @@
 
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-
+	
 
 	<title>User Panel</title>
 </h:head>
-
+<h:outputStylesheet library="css" name="styles.css"/>
 
 <h:body>
+<h:outputStylesheet library="css" name="styles.css"/>
 	<h:outputStylesheet name="styles.css" library="css" />
 	<p:layout fullPage="true">
 		<p:layoutUnit position="north">
-			<p:outputLabel value="Welcome, #{loginCDI.user.name}" style="" />
+			<p:outputLabel value="Welcome, #{loginCDI.user.name}"
+				style="font-size:34px" />
 		</p:layoutUnit>
 
 		<p:layoutUnit position="center" size="500">
@@ -34,52 +36,54 @@
 					<p:column headerText="Email">#{user.email}</p:column>
 
 				</p:dataTable>
-				<div style="width: 100%; display: inline-flex;">
-
+				
 					<p:commandButton value="Remove" action="#{userCDI.removeUser}"
 						update="usersTable phoneListForm:currentUserPhonesTable"
-						style="height:5%;width:100%;" />
-				</div>
+						style="height:5%;width:25%;" />
+
 			</h:form>
 		</p:layoutUnit>
 
-		<p:layoutUnit id="lateralTab" position="west" size="300"
-			resizable="true">
+		<p:layoutUnit id="lateralTab" position="west" size="300">
 			<h:form id="secondaryForm">
 				<p:panel id="selectedUser" style="display:grid"
 					styleClass="westLayoutClass">
 
-
-					<p:outputLabel value="EDIT INFO:" style="font-size:18px;" />
-					<div>
-						<p:outputLabel id="currentUserNameLabel" value="Update Name:" />
-						<p:inputText value="#{userCDI.user.name}"
-							placeholder="Edit name here" />
-					</div>
-
-					<div>
-						<p:outputLabel id="addPhoneLabel" value="Add new phone:" />
-						<div style="display:">
-							<p:inputText styleClass="dddinput"
-								value="#{userCDI.phone.regionCode}" placeholder="DDD" />
-							<p:inputText value="#{userCDI.phone.number}" placeholder="Number" />
-							<p:inputText value="#{userCDI.phone.numberType}"
-								placeholder="Number type" />
-						</div>
+					<h:panelGrid style="text-align:center;margin-bottom:5px;">
+						<p:outputLabel value="EDIT INFO" style="font-size:18px;" />
+						<p:outputLabel value="Change the name and/or add new phone."
+							style="font-size:10px;" />
+					</h:panelGrid>
+					
+					<p:outputLabel value="Edit name:" style="font-size:10px;" />
+					<p:inputText id="currentUserNameLabel" value="#{userCDI.user.name}"
+						placeholder="#{userCDI.user.name}" style="width:196px" />
 
 
-					</div>
+					<h:panelGrid>
+						<p:outputLabel value="Add new phone:" style="font-size:10px;" />
+						<h:panelGrid columns="3">
+							<p:inputText
+								value="#{userCDI.phone.regionCode}" placeholder="DDD"
+								style="font-size: 14px;width: 30px;" maxlength="2" />
+							<p:inputText value="#{userCDI.phone.number}" placeholder="Number"
+								style="font-size: 14px;width: 80px;" maxlength="9" />
+							<h:selectOneMenu id="registerNumberType"
+								value="#{userCDI.phone.numberType}"
+								style="font-size:14px;width:65px;">
+								<f:selectItem itemLabel="Type" itemValue="" />
+								<f:selectItem itemLabel="Cell Phone" itemValue="Cell Phone" />
+								<f:selectItem itemLabel="Landline" itemValue="Landline" />
+							</h:selectOneMenu>
+						</h:panelGrid>
+					</h:panelGrid>
 
 					<p:commandButton value="Submit edition"
 						action="#{userCDI.submitEdition}"
-						update=":mainForm:usersTable :phoneListForm:currentUserPhonesTable" />
-
-					<br />
-					<br />
-
-
+						update=":mainForm:usersTable :phoneListForm:currentUserPhonesTable" style="" />
 				</p:panel>
 			</h:form>
+			<br/>
 			<h:form id="phoneListForm">
 				<p:dataTable style="margin" var="phone"
 					value="#{userCDI.user.phones}" id="currentUserPhonesTable"
