@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf15977924602080" configfile="/pitang-submission/WebContent/WEB-INF/faces-config.xml">
-  <nodes xsi:type="pageflow:PFPage" name="index.xhtml" id="pf15979500825172" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" outlinks="pf15979500825173" inlinks="pf15979501946047" path="/index.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="loggedin/mainpage.xhtml" id="pf15979500825174" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" inlinks="pf15979500825173" path="/loggedin/mainpage.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="register.xhtml" id="pf15979501946048" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf15979501946047" path="/register.xhtml"/>
-  <links id="pf15979500825173" target="pf15979500825174" source="pf15979500825172" outcome="success" fromaction="#{loginCDI.validateUserLogin}"/>
+  <nodes xsi:type="pageflow:PFPage" name="index.xhtml" x="338" y="178" id="pf15979500825172" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" outlinks="pf15980505328582" inlinks="pf15979501946047" path="/index.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="loggedin/mainpage.xhtml" x="554" y="178" id="pf15979500825174" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf15980505328582" path="/loggedin/mainpage.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="register.xhtml" x="122" y="178" id="pf15979501946048" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf15979501946047" path="/register.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="mainpage.xhtml" x="122" y="562" id="pf15980254404231" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" path="/loggedin/mainpage.xhtml"/>
   <links id="pf15979501946047" target="pf15979500825172" source="pf15979501946048" outcome="success" fromaction="#{userCDI.registerUser}"/>
+  <links id="pf15980505328582" target="pf15979500825174" source="pf15979500825172" outcome="success" redirect="true" fromaction="#{loginCDI.validateUserLogin}"/>
 </pageflow:Pageflow>

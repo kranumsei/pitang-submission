@@ -9,48 +9,95 @@
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
+
 	<title>User Panel</title>
 </h:head>
 
 
-<h:body style="">
+<h:body>
+	<h:outputStylesheet name="styles.css" library="css" />
 	<p:layout fullPage="true">
 		<p:layoutUnit position="north">
 			<p:outputLabel value="Welcome, #{loginCDI.user.name}" style="" />
 		</p:layoutUnit>
-		<p:layoutUnit id="leftLayout" position="west" size="300" resizable="true">
-			<p:outputLabel value="Email:" />
-			<p:inputText id="registerEmail" required="true"
-				value="#{userCDI.user.email}" 
-				placeholder="Email" ></p:inputText>
-		</p:layoutUnit>
-		
+
 		<p:layoutUnit position="center" size="500">
-			<h:form >
+			<h:form id="mainForm">
 				<p:dataTable id="usersTable" value="#{userCDI.userList}" var="user"
-					type="definition" selectionMode="single" rowKey="#{user.email}"
-					selection="#{userCDI.user}" >
-					
-					<p:ajax event="rowSelect" update=":leftLayout" listener="#{mainPageBean.someListener}" />
-					
+					selectionMode="single" rowKey="#{user.email}"
+					selection="#{userCDI.user}">
+
+					<p:ajax event="rowSelect"
+						update="secondaryForm:currentUserNameLabel  phoneListForm:currentUserPhonesTable" />
+
 					<p:column headerText="Name">#{user.name}</p:column>
 					<p:column headerText="Email">#{user.email}</p:column>
-					<p:column headerText="Phones">
-						<p:repeat var="phone" value="#{user.phones}">
-							(#{phone.regionCode})
-						</p:repeat>
-					</p:column>
-
 
 				</p:dataTable>
 				<div style="width: 100%; display: inline-flex;">
-					<p:commandButton value="Edit" action="#{userCDI.editUser}"
-						update="leftLayout" style="height:5%;width:100%;" />
+
 					<p:commandButton value="Remove" action="#{userCDI.removeUser}"
-						update="usersTable" style="height:5%;width:100%;" />
+						update="usersTable phoneListForm:currentUserPhonesTable"
+						style="height:5%;width:100%;" />
 				</div>
 			</h:form>
 		</p:layoutUnit>
+
+		<p:layoutUnit id="lateralTab" position="west" size="300"
+			resizable="true">
+			<h:form id="secondaryForm">
+				<p:panel id="selectedUser" style="display:grid"
+					styleClass="westLayoutClass">
+
+
+					<p:outputLabel value="EDIT INFO:" style="font-size:18px;" />
+					<div>
+						<p:outputLabel id="currentUserNameLabel" value="Update Name:" />
+						<p:inputText value="#{userCDI.user.name}"
+							placeholder="Edit name here" />
+					</div>
+
+					<div>
+						<p:outputLabel id="addPhoneLabel" value="Add new phone:" />
+						<div style="display:">
+							<p:inputText styleClass="dddinput"
+								value="#{userCDI.phone.regionCode}" placeholder="DDD" />
+							<p:inputText value="#{userCDI.phone.number}" placeholder="Number" />
+							<p:inputText value="#{userCDI.phone.numberType}"
+								placeholder="Number type" />
+						</div>
+
+
+					</div>
+
+					<p:commandButton value="Submit edition"
+						action="#{userCDI.submitEdition}"
+						update=":mainForm:usersTable :phoneListForm:currentUserPhonesTable" />
+
+					<br />
+					<br />
+
+
+				</p:panel>
+			</h:form>
+			<h:form id="phoneListForm">
+				<p:dataTable style="margin" var="phone"
+					value="#{userCDI.user.phones}" id="currentUserPhonesTable"
+					selectionMode="single" selection="#{userCDI.phone}"
+					rowKey="#{phone.number}">
+					<p:column headerText="Phone List">
+						#{phone.numberType} - (#{phone.regionCode}) #{phone.number}
+					</p:column>
+				</p:dataTable>
+
+				<p:commandButton value="Remove Phone"
+					action="#{userCDI.removePhoneFromUser}"
+					style="height:5%;width:100%;" update="currentUserPhonesTable" />
+			</h:form>
+
+		</p:layoutUnit>
+
+
 	</p:layout>
 
 

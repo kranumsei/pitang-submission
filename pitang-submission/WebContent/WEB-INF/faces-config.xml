@@ -9,7 +9,12 @@
 		<navigation-case>
 			<from-action>#{loginCDI.validateUserLogin}</from-action>
 			<from-outcome>success</from-outcome>
-			<to-view-id>/loggedin/mainpage.xhtml</to-view-id>
+			<to-view-id>/loggedin/mainpage.xhtml?faces-redirect=true</to-view-id>
+			<redirect></redirect>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>register.xhtml</from-outcome>
+			<to-view-id>/register.xhtml?faces-redirect=true</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 	
@@ -18,7 +23,7 @@
 		<navigation-case>
 			<from-action>#{userCDI.registerUser}</from-action>
 			<from-outcome>success</from-outcome>
-			<to-view-id>/index.xhtml</to-view-id>
+			<to-view-id>/index.xhtml?faces-redirect=true</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 	

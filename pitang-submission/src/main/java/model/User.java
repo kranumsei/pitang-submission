@@ -26,6 +26,7 @@ public class User implements Serializable{
 	public User() {
 		
 	}
+
 	
 	public String getName() {
 		return name;
@@ -55,8 +56,8 @@ public class User implements Serializable{
 		return phones;
 	}
 
-	public void setPhones(ArrayList<Phone> phones) {
-		this.phones = phones;
+	public void setPhones(List<Phone> list) {
+		this.phones = list;
 	}
 	
 	

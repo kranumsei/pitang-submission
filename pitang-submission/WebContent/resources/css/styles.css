@@ -1,0 +1,15 @@
+@charset "UTF-8";
+
+.ui-panel-content .ui-widget-content {
+	display: grid;
+}
+
+.westLayoutClass {
+	display: grid;
+}
+
+.ui-inputfield .ui-inputtext .ui-widget .ui-state-default .ui-corner-all .dddinput
+	{
+	width: 26px;
+	font-size: 12px;
+}

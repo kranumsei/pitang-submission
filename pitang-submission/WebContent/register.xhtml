@@ -7,36 +7,57 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
+
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Register User</title>
 </h:head>
+<f:metadata>
+	<f:event listener="#{userCDI.clear}" type="preRenderView" />
+</f:metadata>
 
 <h:body>
+
 	<h:form>
 		<p:panel id="panel" header="Create new user"
 			style="margin-bottom:10px;">
 			<p:messages id="messages" />
 			<h:panelGrid columns="2" cellpadding="5">
 				<p:outputLabel value="Email:" />
-				<p:inputText id="registerEmail" required="true" value="#{userCDI.user.email}" requiredMessage="Email is missing" placeholder="Email"/>
+				<p:inputText id="registerEmail" required="true"
+					value="#{userCDI.user.email}" requiredMessage="Email is missing"
+					placeholder="Email" />
 
 				<p:outputLabel value="Password:" />
-				<p:password id="registerPwd" required="true" value="#{userCDI.user.pwd}" match="registerPwd2" validatorMessage="Passwords do not match. Please confirm your password." requiredMessage="Password is missing" placeholder="Password"/>
+				<p:password id="registerPwd" required="true"
+					value="#{userCDI.user.pwd}" match="registerPwd2"
+					validatorMessage="Passwords do not match. Please confirm your password."
+					requiredMessage="Password is missing" placeholder="Password" />
 
 				<p:outputLabel value="Confirm Password:" />
-				<p:password id="registerPwd2" required="true" requiredMessage="Password confirmation is missing" placeholder="Confirm Password"/>
+				<p:password id="registerPwd2" required="true"
+					requiredMessage="Password confirmation is missing"
+					placeholder="Confirm Password" />
 
 				<p:outputLabel value="Name:" />
-				<p:inputText id="registerName" required="true" value="#{userCDI.user.name}" requiredMessage="Name is missing" placeholder="Name"/>
+				<p:inputText id="registerName" required="true"
+					value="#{userCDI.user.name}" requiredMessage="Name is missing"
+					placeholder="Name" />
 
 				<p:outputLabel value="Phone:" />
 				<p:panelGrid columns="3">
-					<p:inputText id="registerRegionCode" required="true" value="#{userCDI.phone.regionCode}" requiredMessage="Region code is missing" placeholder="DDD"/>
-					<p:inputText id="registerNumber" required="true" value="#{userCDI.phone.number}" requiredMessage="Phone number is missing" placeholder="Phone Number" />
-					<h:selectOneMenu id="registerNumberType" required="true" value="#{userCDI.phone.numberType}" requiredMessage="Phone type is missing" >
+					<p:inputText id="registerRegionCode" required="true"
+						value="#{userCDI.phone.regionCode}"
+						requiredMessage="Region code is missing" placeholder="DDD" />
+					<p:inputText id="registerNumber" required="true"
+						value="#{userCDI.phone.number}"
+						requiredMessage="Phone number is missing"
+						placeholder="Phone Number" />
+					<h:selectOneMenu id="registerNumberType" required="true"
+						value="#{userCDI.phone.numberType}"
+						requiredMessage="Phone type is missing">
 						<f:selectItem itemLabel="Select a type" itemValue="" />
-						<f:selectItem itemLabel="Cell Phone" itemValue="1" />
-						<f:selectItem itemLabel="Landline" itemValue="2" />
+						<f:selectItem itemLabel="Cell Phone" itemValue="Cell Phone" />
+						<f:selectItem itemLabel="Landline" itemValue="Landline" />
 					</h:selectOneMenu>
 				</p:panelGrid>
 
@@ -44,7 +65,8 @@
 			</h:panelGrid>
 		</p:panel>
 
-		<p:commandButton value="Create" action="#{userCDI.registerUser}" update="panel"/>
+		<p:commandButton value="Create" action="#{userCDI.registerUser}"
+			update="panel" />
 	</h:form>
 
 </h:body>

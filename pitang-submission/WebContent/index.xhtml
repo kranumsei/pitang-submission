@@ -10,24 +10,30 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Login</title>
 </h:head>
-
+<f:metadata>
+	<f:event listener="#{userCDI.clear}" type="preRenderView" />
+</f:metadata>
 <h:body>
 	<h:form>
 		<p:panel id="panel" header="Sign in" style="margin-bottom:10px;">
 			<p:messages id="messages" />
 			<h:panelGrid columns="2" cellpadding="5">
 				<p:outputLabel for="name" value="Email:" />
-				<p:inputText id="name" required="true" value="#{loginCDI.user.email}"/>
+				<p:inputText id="name" required="true"
+					value="#{loginCDI.user.email}" />
 
 				<p:outputLabel for="password" value="Password:" />
-				<p:password id="password" required="true" value="#{loginCDI.user.pwd}"/>
+				<p:password id="password" required="true"
+					value="#{loginCDI.user.pwd}" />
 				<p:outputLabel />
-				<p:link outcome="register.xhtml" value="Create new user." style="font-size:8"/>
+				<p:link outcome="register.xhtml?faces-redirect=true"
+					value="Create new user." style="font-size:8" />
 			</h:panelGrid>
 		</p:panel>
 
-		<p:commandButton value="Submit" update="panel" action="#{loginCDI.validateUserLogin}"/>
-	
+		<p:commandButton value="Submit" update="panel"
+			action="#{loginCDI.validateUserLogin}" />
+
 	</h:form>
 	<!-- 	<h:form id="form"> -->
 	<!-- 		<h:panelGrid columns="1"> -->

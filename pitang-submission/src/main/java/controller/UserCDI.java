@@ -1,4 +1,4 @@
-package controler;
+package controller;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -42,23 +42,64 @@ public class UserCDI implements Serializable {
 	private List<User> userList = new ArrayList<User>();
 
 	public String registerUser() {
+		String result = "";
 		user.getPhones().add(phone);
-		persistUser();
-		userList.add(user);
+		if (persistUser()) {
+			userList.add(user);
+			result = "success";
+		} else {
+			result = "fail";
+		}
 		clear();
-		return "success";
+		return result;
 	}
 
-	private void persistUser() {
+	private boolean persistUser() {
 		try {
 			ut.begin();
 			em.persist(user);
+			em.flush();
+			em.clear();
+			ut.commit();
+
+			return true;
+		} catch (NotSupportedException | SystemException | SecurityException | IllegalStateException | RollbackException
+				| HeuristicMixedException | HeuristicRollbackException e) {
+
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	private void editUser() {
+		try {
+			ut.begin();
+			em.merge(user);
+			em.flush();
 			ut.commit();
 		} catch (NotSupportedException | SystemException | SecurityException | IllegalStateException | RollbackException
 				| HeuristicMixedException | HeuristicRollbackException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+	}
+
+	public void submitEdition() {
+
+		User oldValues = em.find(User.class, user.getEmail());
+		if (phone.getRegionCode() != null && !phone.getNumber().equals("") && !phone.getNumberType().equals("")) {
+			user.getPhones().add(phone);
+		}
+		if (user.getName().equals("")) {
+			user.setName(oldValues.getName());
+		}
+		editUser();
+	}
+
+	public void removePhoneFromUser() {
+		user.getPhones().remove(phone);
+		editUser();
 	}
 
 	public void removeUser() {
@@ -73,7 +114,7 @@ public class UserCDI implements Serializable {
 				| HeuristicMixedException | HeuristicRollbackException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	private void retrieveList() {
@@ -81,11 +122,7 @@ public class UserCDI implements Serializable {
 		userList = query.getResultList();
 	}
 
-	public void editUser() {
-
-	}
-
-	private void clear() {
+	public void clear() {
 		user = new User();
 		phone = new Phone();
 	}
