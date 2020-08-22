@@ -11,10 +11,10 @@
 	<title>Login</title>
 </h:head>
 <f:metadata>
-	<f:event listener="#{userCDI.clear}" type="preRenderView" />
+	<f:event listener="#{selectedUserCDI.clear}" type="preRenderView" />
 </f:metadata>
 <h:body>
-	<h:form>
+	<h:form id="loginForm">
 		<p:panel id="panel" header="Sign in" style="margin-bottom:10px;">
 			<p:messages id="messages" />
 			<h:panelGrid columns="2" cellpadding="5">
@@ -31,25 +31,32 @@
 			</h:panelGrid>
 		</p:panel>
 
-		<p:commandButton value="Submit" update="panel"
-			action="#{loginCDI.validateUserLogin}" />
-
+		<p:commandButton id="loginButton" value="Submit" update="panel"
+			action="#{loginController.validateUserLogin}"/>
+			<h:message for="loginButton" />
 	</h:form>
+	<br />
+	<p:outputLabel value="INSTRUCTONS: ">
+		<br /> Instruction and explanation about this application may be found on my <a href="https://github.com/kranumsei/pitang-submission">github</a> page.
+		Default admin credentials:
+		Admin
+		admin123
+	</p:outputLabel>
 	<!-- 	<h:form id="form"> -->
 	<!-- 		<h:panelGrid columns="1"> -->
 	<!-- 			<p:outputLabel value="Email" /> -->
 	<!-- 			<h:inputText value="#{user.email}" /> -->
 	<!-- 			<h:outputText value="Password" /> -->
-	<!-- 			<h:inputSecret value="#{userCDI.user.pwd}" /> -->
+	<!-- 			<h:inputSecret value="#{selectedUserCDI.user.pwd}" /> -->
 	<!-- 			<h:outputText value="Name" /> -->
-	<!-- 			<h:inputText value="#{userCDI.user.name}" /> -->
+	<!-- 			<h:inputText value="#{selectedUserCDI.user.name}" /> -->
 	<!-- 			<h:outputText value="Phone" /> -->
-	<!-- 			<h:inputText value="#{userCDI.phone.regionCode}" /> -->
-	<!-- 			<h:inputText value="#{userCDI.phone.number}" /> -->
-	<!-- 			<h:inputText value="#{userCDI.phone.numberType}" /> -->
+	<!-- 			<h:inputText value="#{selectedUserCDI.phone.regionCode}" /> -->
+	<!-- 			<h:inputText value="#{selectedUserCDI.phone.number}" /> -->
+	<!-- 			<h:inputText value="#{selectedUserCDI.phone.numberType}" /> -->
 	<!-- 		</h:panelGrid> -->
 	<!-- 	</h:form> -->
-	<!-- 	<p:dataTable value="#{userCDI.userList}" var="u" id="userlist"> -->
+	<!-- 	<p:dataTable value="#{selectedUserCDI.userList}" var="u" id="userlist"> -->
 	<!-- 		<p:column>#{u.email}</p:column> -->
 	<!-- 		<p:column>#{u.name}</p:column> -->
 	<!-- 	</p:dataTable> -->

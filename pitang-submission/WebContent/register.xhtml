@@ -12,24 +12,25 @@
 	<title>Register User</title>
 </h:head>
 <f:metadata>
-	<f:event listener="#{userCDI.clear}" type="preRenderView" />
+	<f:event listener="#{selectedUserCDI.clear}" type="preRenderView" />
 </f:metadata>
 
 <h:body>
 
-	<h:form>
+	<h:form id="registerUserForm">
 		<p:panel id="panel" header="Create new user"
 			style="margin-bottom:10px;">
 			<p:messages id="messages" />
 			<h:panelGrid columns="2" cellpadding="5">
 				<p:outputLabel value="Email:" />
 				<p:inputText id="registerEmail" required="true"
-					value="#{userCDI.user.email}" requiredMessage="Email is missing"
-					placeholder="Email" />
+					value="#{selectedUserCDI.user.email}" requiredMessage="Email is missing"
+					placeholder="Email" validatorMessage="Please, use a valid email format."><f:validateRegex for="registerEmail" pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+					</p:inputText>
 
 				<p:outputLabel value="Password:" />
 				<p:password id="registerPwd" required="true"
-					value="#{userCDI.user.pwd}" match="registerPwd2"
+					value="#{selectedUserCDI.user.pwd}" match="registerPwd2"
 					validatorMessage="Passwords do not match. Please confirm your password."
 					requiredMessage="Password is missing" placeholder="Password" />
 
@@ -40,32 +41,30 @@
 
 				<p:outputLabel value="Name:" />
 				<p:inputText id="registerName" required="true"
-					value="#{userCDI.user.name}" requiredMessage="Name is missing"
+					value="#{selectedUserCDI.user.name}" requiredMessage="Name is missing"
 					placeholder="Name" />
 
 				<p:outputLabel value="Phone:" />
 				<p:panelGrid columns="3">
-					<p:inputText id="registerRegionCode" required="true"
-						value="#{userCDI.phone.regionCode}"
-						requiredMessage="Region code is missing" placeholder="DDD" />
-					<p:inputText id="registerNumber" required="true"
-						value="#{userCDI.phone.number}"
-						requiredMessage="Phone number is missing"
-						placeholder="Phone Number" />
-					<h:selectOneMenu id="registerNumberType" required="true"
-						value="#{userCDI.phone.numberType}"
-						requiredMessage="Phone type is missing">
-						<f:selectItem itemLabel="Select a type" itemValue="" />
-						<f:selectItem itemLabel="Cell Phone" itemValue="Cell Phone" />
-						<f:selectItem itemLabel="Landline" itemValue="Landline" />
-					</h:selectOneMenu>
+					<p:inputText
+								value="#{selectedUserCDI.phone.regionCode}" placeholder="DDD"
+								style="font-size: 14px;width: 30px;" maxlength="2" />
+							<p:inputText value="#{selectedUserCDI.phone.number}" placeholder="Number"
+								style="font-size: 14px;width: 80px;" maxlength="9" />
+							<h:selectOneMenu id="registerNumberType"
+								value="#{selectedUserCDI.phone.numberType}"
+								style="font-size:14px;width:65px;">
+								<f:selectItem itemLabel="Type" itemValue="" />
+								<f:selectItem itemLabel="Cell Phone" itemValue="Cell Phone" />
+								<f:selectItem itemLabel="Landline" itemValue="Landline" />
+							</h:selectOneMenu>
 				</p:panelGrid>
 
 
 			</h:panelGrid>
 		</p:panel>
 
-		<p:commandButton value="Create" action="#{userCDI.registerUser}"
+		<p:commandButton value="Create" action="#{registerController.registerUser}"
 			update="panel" />
 	</h:form>
 

@@ -21,9 +21,9 @@ import javax.transaction.UserTransaction;
 import model.Phone;
 import model.User;
 
-@Named("userCDI")
+@Named("selectedUserCDI")
 @SessionScoped
-public class UserCDI implements Serializable {
+public class SelectedUserCDI implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -41,20 +41,8 @@ public class UserCDI implements Serializable {
 
 	private List<User> userList = new ArrayList<User>();
 
-	public String registerUser() {
-		String result = "";
-		user.getPhones().add(phone);
-		if (persistUser()) {
-			userList.add(user);
-			result = "success";
-		} else {
-			result = "fail";
-		}
-		clear();
-		return result;
-	}
-
-	private boolean persistUser() {
+	
+	public boolean persistUser() {
 		try {
 			ut.begin();
 			em.persist(user);
@@ -72,7 +60,7 @@ public class UserCDI implements Serializable {
 	}
 
 	
-	private void editUser() {
+	public void editUser() {
 		try {
 			ut.begin();
 			em.merge(user);
@@ -83,31 +71,14 @@ public class UserCDI implements Serializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 
-	public void submitEdition() {
-		if(phone.getRegionCode() != null && !phone.getNumber().equals("") && !phone.getNumberType().equals("")) {
-			user.getPhones().add(phone);
-		} 
-		if(user.getName().equals("")) {
-			User newUser = em.find(User.class, user.getEmail());
-			user.setName(newUser.getName());
-		}
-		editUser();
-		phone = new Phone();
-	}
 
-	public void removePhoneFromUser() {
-		user.getPhones().remove(phone);
-		editUser();
-	}
-
-	public void removeUser() {
+	 public void removeUser(String userToRemove) {
 		try {
 			ut.begin();
-			User userToRemove = em.find(User.class, user.getEmail());
-			em.remove(userToRemove);
+			User toRemove = em.find(User.class, userToRemove);
+			em.remove(toRemove);
 			ut.commit();
 			userList.remove(user);
 			clear();
@@ -118,7 +89,8 @@ public class UserCDI implements Serializable {
 
 	}
 
-	private void retrieveList() {
+	@SuppressWarnings("unchecked")
+	public void retrieveList() {
 		Query query = em.createQuery("SELECT u FROM User u");
 		userList = query.getResultList();
 	}

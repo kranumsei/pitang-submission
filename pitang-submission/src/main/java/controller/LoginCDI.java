@@ -5,8 +5,6 @@ import java.io.Serializable;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 import model.User;
 
@@ -18,9 +16,6 @@ public class LoginCDI implements Serializable{
 
 	@Inject
 	private User user;
-	
-	@PersistenceContext
-	private EntityManager em;
 
 	private boolean isLoggedIn = false;;
 	
@@ -28,16 +23,7 @@ public class LoginCDI implements Serializable{
 		
 	}
 	
-	public String validateUserLogin() {
-		String typedPwd = user.getPwd();
-		user = em.find(User.class, this.user.getEmail());
-		if(user.getPwd().equals(typedPwd)) {
-			isLoggedIn = true;
-			return "success";
-		}else {
-			return "failed";
-		}
-	}
+	
 	
 	public User getUser() {
 		return user;

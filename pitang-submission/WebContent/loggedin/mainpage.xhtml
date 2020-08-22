@@ -13,7 +13,9 @@
 	<title>User Panel</title>
 </h:head>
 <h:outputStylesheet library="css" name="styles.css"/>
-
+<f:metadata>
+	<f:event listener="#{selectedUserCDI.retrieveList}" type="preRenderView" />
+</f:metadata>
 <h:body>
 <h:outputStylesheet library="css" name="styles.css"/>
 	<h:outputStylesheet name="styles.css" library="css" />
@@ -25,9 +27,9 @@
 
 		<p:layoutUnit position="center" size="500">
 			<h:form id="mainForm">
-				<p:dataTable id="usersTable" value="#{userCDI.userList}" var="user"
+				<p:dataTable id="usersTable" value="#{selectedUserCDI.userList}" var="user"
 					selectionMode="single" rowKey="#{user.email}"
-					selection="#{userCDI.user}">
+					selection="#{selectedUserCDI.user}">
 
 					<p:ajax event="rowSelect"
 						update="secondaryForm:currentUserNameLabel  phoneListForm:currentUserPhonesTable" />
@@ -37,7 +39,7 @@
 
 				</p:dataTable>
 				
-					<p:commandButton value="Remove" action="#{userCDI.removeUser}"
+					<p:commandButton value="Remove" action="#{mainPageController.removeSelectedUser}"
 						update="usersTable phoneListForm:currentUserPhonesTable"
 						style="height:5%;width:25%;" />
 
@@ -56,20 +58,20 @@
 					</h:panelGrid>
 					
 					<p:outputLabel value="Edit name:" style="font-size:10px;" />
-					<p:inputText id="currentUserNameLabel" value="#{userCDI.user.name}"
-						placeholder="#{userCDI.user.name}" style="width:196px" />
+					<p:inputText id="currentUserNameLabel" value="#{selectedUserCDI.user.name}"
+						placeholder="#{selectedUserCDI.user.name}" style="width:196px" />
 
 
 					<h:panelGrid>
 						<p:outputLabel value="Add new phone:" style="font-size:10px;" />
 						<h:panelGrid columns="3">
 							<p:inputText
-								value="#{userCDI.phone.regionCode}" placeholder="DDD"
+								value="#{selectedUserCDI.phone.regionCode}" placeholder="DDD"
 								style="font-size: 14px;width: 30px;" maxlength="2" />
-							<p:inputText value="#{userCDI.phone.number}" placeholder="Number"
+							<p:inputText value="#{selectedUserCDI.phone.number}" placeholder="Number"
 								style="font-size: 14px;width: 80px;" maxlength="9" />
 							<h:selectOneMenu id="registerNumberType"
-								value="#{userCDI.phone.numberType}"
+								value="#{selectedUserCDI.phone.numberType}"
 								style="font-size:14px;width:65px;">
 								<f:selectItem itemLabel="Type" itemValue="" />
 								<f:selectItem itemLabel="Cell Phone" itemValue="Cell Phone" />
@@ -79,15 +81,15 @@
 					</h:panelGrid>
 
 					<p:commandButton value="Submit edition"
-						action="#{userCDI.submitEdition}"
+						action="#{mainPageController.submitEdition}"
 						update=":mainForm:usersTable :phoneListForm:currentUserPhonesTable" style="" />
 				</p:panel>
 			</h:form>
 			<br/>
 			<h:form id="phoneListForm">
 				<p:dataTable style="margin" var="phone"
-					value="#{userCDI.user.phones}" id="currentUserPhonesTable"
-					selectionMode="single" selection="#{userCDI.phone}"
+					value="#{selectedUserCDI.user.phones}" id="currentUserPhonesTable"
+					selectionMode="single" selection="#{selectedUserCDI.phone}"
 					rowKey="#{phone.number}">
 					<p:column headerText="Phone List">
 						#{phone.numberType} - (#{phone.regionCode}) #{phone.number}
@@ -95,7 +97,7 @@
 				</p:dataTable>
 
 				<p:commandButton value="Remove Phone"
-					action="#{userCDI.removePhoneFromUser}"
+					action="#{mainPageController.removePhoneFromUser}"
 					style="height:5%;width:100%;" update="currentUserPhonesTable" />
 			</h:form>
 
