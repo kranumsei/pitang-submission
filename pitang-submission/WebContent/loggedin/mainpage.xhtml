@@ -8,16 +8,17 @@
 
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	
+
 
 	<title>User Panel</title>
 </h:head>
-<h:outputStylesheet library="css" name="styles.css"/>
+<h:outputStylesheet library="css" name="styles.css" />
 <f:metadata>
-	<f:event listener="#{selectedUserCDI.retrieveList}" type="preRenderView" />
+	<f:event listener="#{selectedUserCDI.retrieveList}"
+		type="preRenderView" />
 </f:metadata>
 <h:body>
-<h:outputStylesheet library="css" name="styles.css"/>
+
 	<h:outputStylesheet name="styles.css" library="css" />
 	<p:layout fullPage="true">
 		<p:layoutUnit position="north">
@@ -25,23 +26,24 @@
 				style="font-size:34px" />
 		</p:layoutUnit>
 
-		<p:layoutUnit position="center" size="500">
+		<p:layoutUnit id="centerLayout" position="center" size="500">
 			<h:form id="mainForm">
-				<p:dataTable id="usersTable" value="#{selectedUserCDI.userList}" var="user"
-					selectionMode="single" rowKey="#{user.email}"
+				<p:dataTable id="usersTable" value="#{selectedUserCDI.userList}"
+					var="user" selectionMode="single" rowKey="#{user.email}"
 					selection="#{selectedUserCDI.user}">
 
 					<p:ajax event="rowSelect"
-						update="secondaryForm:currentUserNameLabel  phoneListForm:currentUserPhonesTable" />
+						update="secondaryForm:currentUserNameLabel phoneListForm:currentUserPhonesTable " />
 
 					<p:column headerText="Name">#{user.name}</p:column>
 					<p:column headerText="Email">#{user.email}</p:column>
 
 				</p:dataTable>
-				
-					<p:commandButton value="Remove" action="#{mainPageController.removeSelectedUser}"
-						update="usersTable phoneListForm:currentUserPhonesTable"
-						style="height:5%;width:25%;" />
+
+				<p:commandButton id="removeUserButton" value="Remove"
+					action="#{mainPageController.removeSelectedUser}"
+					update="usersTable phoneListForm:currentUserPhonesTable"
+					style="height:5%;width:25%;" rendered="#{loginCDI.user.isAdmin}" />
 
 			</h:form>
 		</p:layoutUnit>
@@ -56,20 +58,22 @@
 						<p:outputLabel value="Change the name and/or add new phone."
 							style="font-size:10px;" />
 					</h:panelGrid>
-					
+
 					<p:outputLabel value="Edit name:" style="font-size:10px;" />
-					<p:inputText id="currentUserNameLabel" value="#{selectedUserCDI.user.name}"
+					<p:inputText id="currentUserNameLabel"
+						value="#{selectedUserCDI.user.name}"
 						placeholder="#{selectedUserCDI.user.name}" style="width:196px" />
 
 
 					<h:panelGrid>
 						<p:outputLabel value="Add new phone:" style="font-size:10px;" />
 						<h:panelGrid columns="3">
-							<p:inputText
-								value="#{selectedUserCDI.phone.regionCode}" placeholder="DDD"
-								style="font-size: 14px;width: 30px;" maxlength="2" />
-							<p:inputText value="#{selectedUserCDI.phone.number}" placeholder="Number"
-								style="font-size: 14px;width: 80px;" maxlength="9" />
+							<p:inputText value="#{selectedUserCDI.phone.regionCode}"
+								placeholder="DDD" style="font-size: 14px;width: 30px;"
+								maxlength="2" />
+							<p:inputText value="#{selectedUserCDI.phone.number}"
+								placeholder="Number" style="font-size: 14px;width: 80px;"
+								maxlength="9" />
 							<h:selectOneMenu id="registerNumberType"
 								value="#{selectedUserCDI.phone.numberType}"
 								style="font-size:14px;width:65px;">
@@ -80,12 +84,14 @@
 						</h:panelGrid>
 					</h:panelGrid>
 
-					<p:commandButton value="Submit edition"
+					<p:commandButton id="submitEditionButton" value="Submit edition"
 						action="#{mainPageController.submitEdition}"
-						update=":mainForm:usersTable :phoneListForm:currentUserPhonesTable" style="" />
+						update=":mainForm:usersTable :phoneListForm:currentUserPhonesTable">
+					</p:commandButton>
+
 				</p:panel>
 			</h:form>
-			<br/>
+			<br />
 			<h:form id="phoneListForm">
 				<p:dataTable style="margin" var="phone"
 					value="#{selectedUserCDI.user.phones}" id="currentUserPhonesTable"
