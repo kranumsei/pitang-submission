@@ -23,8 +23,6 @@ public class LoginCDI implements Serializable{
 		
 	}
 	
-	
-	
 	public User getUser() {
 		return user;
 	}
