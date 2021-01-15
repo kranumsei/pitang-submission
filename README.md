@@ -1,5 +1,7 @@
 # pitang-submission
 
+OBS: PROJETO NÃO ESTÁ MAIS HOSPEDADO VISTO QUE A SELEÇÃO TERMINOU.
+
 - Foi utiliado Java 11 (openjdk 11.0.8 2020-07-14)
 - A IDE utilizada foi o Eclipse (Version: 2019-12 (4.14.0) Build id: 20191212-1212)
 - A aplicação, esta rondando no servidor de aplicação WildFly (wildfly-20.0.1.Final)
